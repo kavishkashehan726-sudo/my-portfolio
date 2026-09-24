@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Theme tokens ---------- */
+:root,
+[data-theme="light"] {
+  --bg: #f4f2fa;
+  --bg-2: #ffffff;
+  --surface: #ebe8f5;
+  --ink: #17132e;
+  --ink-2: #57517a;
+  --line: rgb(23 19 46 / 0.1);
+  --accent: #e3263a;
+  --accent-2: #ff5a3d;
+  --node: #9a7331;
+  --node-line: rgb(120 88 40 / 0.28);
+  --glow: rgb(227 38 58 / 0.28);
+  --nav-bg: rgb(255 255 255 / 0.7);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #120f26;
+  --bg-2: #1a1636;
+  --surface: #211c42;
+  --ink: #f3f1ff;
+  --ink-2: #b3aecb;
+  --line: rgb(255 255 255 / 0.08);
+  --accent: #ff3b3f;
+  --accent-2: #ff6a4d;
+  --node: #c79a55;
+  --node-line: rgb(199 154 85 / 0.32);
+  --glow: rgb(255 59 63 / 0.65);
+  --nav-bg: rgb(255 255 255 / 0.08);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-node: var(--node);
+  --font-display: var(--font-sora);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-jetbrains);
+}
+
+/* ---------- Base ---------- */
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Custom cursor: hide the native one only on fine pointers once the custom one is live */
+@media (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+/* ---------- Pieces ---------- */
+.eyebrow {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Red nebula behind the hero portrait */
+.nebula {
+  background:
+    radial-gradient(38% 34% at 40% 55%, var(--glow), transparent 70%),
+    radial-gradient(22% 20% at 30% 40%, rgb(255 90 61 / 0.45), transparent 70%),
+    radial-gradient(30% 28% at 62% 70%, rgb(255 59 63 / 0.25), transparent 72%);
+  filter: blur(8px);
+}
+
+[data-theme="light"] .nebula {
+  opacity: 0.75;
+}
+
+/* Fade the portrait's cropped edges (shoulders and bottom) into the page */
+.portrait-mask {
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%),
+    linear-gradient(to top, transparent 0, #000 16%);
+  mask-composite: intersect;
+}
+
+/* Paint splash in the top-left corner, like the template */
+.splash {
+  background:
+    radial-gradient(closest-side, rgb(227 38 58 / 0.85), transparent) 20% 30% / 40% 40% no-repeat,
+    radial-gradient(closest-side, rgb(255 90 61 / 0.6), transparent) 60% 10% / 25% 25% no-repeat,
+    radial-gradient(closest-side, rgb(227 38 58 / 0.7), transparent) 5% 70% / 30% 30% no-repeat;
+  filter: blur(2px);
+  mask-image: radial-gradient(circle at 0 0, #000 30%, transparent 70%);
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+.spin-slower {
+  animation: spin-slow 60s linear infinite;
+}
+.spin-reverse {
+  animation: spin-slow 40s linear infinite reverse;
+}
+
+/* Gentle sway for the waving avatar */
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  15%, 45% { transform: rotate(4deg); }
+  30% { transform: rotate(-2.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

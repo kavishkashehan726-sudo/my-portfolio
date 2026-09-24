@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# local-only files (kept on this machine, never pushed)
+diary.md
+Resources/
+.dist/
+cinematic_portfolio_website_plan_updated.md
+
+# misc
+.DS_Store
+*.log
+.env*
