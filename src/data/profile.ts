@@ -8,6 +8,8 @@ export const profile = {
   email: "kavishkashehan726@gmail.com",
   whatsapp: "https://wa.me/94753429801",
   github: "https://github.com/kavishkashehan726-sudo",
+  /** Typed one after another in the hero terminal line. Keep each under ~32 characters so it fits on phones. */
+  taglines: ["Full-stack engineer, Sri Lanka", "Building SaaS, POS & ERP systems", "From first commit to live server"],
   intro:
     "Full-stack engineer from Hikkaduwa, Sri Lanka. I design, build and deploy multi-tenant SaaS, POS & ERP systems and learning platforms — then keep them running on production servers long after launch.",
   stats: [

@@ -155,6 +155,15 @@ html.lenis body {
   animation: spin-slow 40s linear infinite reverse;
 }
 
+/* Terminal caret */
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret-blink {
+  animation: caret-blink 1s step-end infinite;
+}
+
 /* Gentle sway for the waving avatar */
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }
