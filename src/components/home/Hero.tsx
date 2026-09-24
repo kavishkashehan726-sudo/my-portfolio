@@ -7,6 +7,7 @@ import { asset } from "@/lib/asset";
 import { useIntro } from "@/components/providers/IntroProvider";
 import { Constellation } from "./Constellation";
 import { ProjectsBadge } from "./ProjectsBadge";
+import { TypingLine } from "./TypingLine";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -57,14 +58,14 @@ export function Hero() {
       <div className="mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 px-5 pt-24 sm:px-10 lg:grid-cols-[1.05fr_1fr] lg:px-16 lg:pt-0">
         {/* Copy */}
         <motion.div style={{ y: textY }} className="relative z-10 flex flex-col justify-center lg:py-32">
-          <motion.p
-            className="eyebrow mb-6"
+          <motion.div
+            className="mb-6"
             initial={{ opacity: 0, x: -12 }}
             animate={done ? { opacity: 1, x: 0 } : undefined}
             transition={{ duration: 0.8, ease }}
           >
-            {profile.role} · Sri Lanka
-          </motion.p>
+            <TypingLine lines={profile.taglines} start={done} />
+          </motion.div>
           <h1 className="font-display text-[2.3rem] font-semibold leading-[1.1] tracking-tight text-ink sm:text-[3.2rem] lg:text-[2.75rem] xl:text-[3.5rem] 2xl:text-[4rem]">
             <Line i={0} show={done}>Building the Systems</Line>
             <Line i={1} show={done}>
