@@ -9,7 +9,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const dark = mounted ? resolvedTheme === "dark" : true;
+  const dark = mounted ? resolvedTheme === "dark" : false;
   const label = dark ? "Switch to light theme" : "Switch to dark theme";
 
   return (

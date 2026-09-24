@@ -9,7 +9,7 @@ import { TransitionProvider } from "./TransitionProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
+    <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
       <ReactLenis root options={{ lerp: 0.09, smoothWheel: true }}>
         <MotionConfig reducedMotion="user">
           <IntroProvider>
