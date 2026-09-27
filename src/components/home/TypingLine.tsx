@@ -51,7 +51,7 @@ export function TypingLine({ lines, start }: { lines: readonly string[]; start: 
   const shown = lines[index].slice(0, count);
 
   return (
-    <p className="flex items-center whitespace-nowrap font-mono text-[0.95rem] text-ink sm:text-[1.1rem] xl:text-[1.2rem]">
+    <p data-bug-skip className="flex items-center whitespace-nowrap font-mono text-[0.95rem] text-ink sm:text-[1.1rem] xl:text-[1.2rem]">
       <span className="sr-only">{lines.join(". ")}</span>
       <span aria-hidden className="flex items-center">
         <span className="mr-3 text-accent">~ $</span>
