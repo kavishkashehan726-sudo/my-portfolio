@@ -59,6 +59,28 @@ const TEXT = "main h1, main h2, main h3, main p, footer p";
 const SCARE_PX = 50;
 
 type Spot = { el: Element; along: number; x: number; y: number; area: number; box: boolean };
+type Edge = { left: number; right: number; top: number; bottom: number };
+type Perch = { el: Element; box: boolean; along: number };
+
+/**
+ * The edge the bug stands on. Cards use their own box. Text uses its first line of glyphs,
+ * because a paragraph or heading block is often much wider than the words in it.
+ */
+function edgeOf(el: Element, box: boolean): Edge | null {
+  if (box) return el.getBoundingClientRect();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const rects = [...range.getClientRects()].filter((r) => r.width > 2 && r.height > 2);
+  if (!rects.length) return null;
+  const top = Math.min(...rects.map((r) => r.top));
+  const line = rects.filter((r) => r.top < top + 6);
+  return {
+    left: Math.min(...line.map((r) => r.left)),
+    right: Math.max(...line.map((r) => r.right)),
+    top,
+    bottom: Math.max(...line.map((r) => r.bottom)),
+  };
+}
 
 /**
  * A pixel bug that crawls out of the header tunnel, lands on the biggest card in view (or text),
@@ -84,13 +106,13 @@ export function Bug() {
     type Mode = "emerging" | "flying" | "hovering" | "landed" | "fleeing";
     let mode: Mode = "emerging";
     const pos = { x: -200, y: -200 };
-    let landing: { el: Element; along: number } | null = null;
+    let landing: Perch | null = null;
+    let landedAt = 0;
     let pointer: { x: number; y: number } | null = null;
     let move: gsap.core.Animation | null = null;
     let timer: gsap.core.Animation | null = null;
     let bob: gsap.core.Animation | null = null;
     let restless: gsap.core.Animation | null = null;
-    let lastScroll = 0;
     let calm = 0;
 
     const unit = () => (sprite.current?.getBoundingClientRect().width ?? 48) / 16;
@@ -137,12 +159,17 @@ export function Bug() {
     scan();
 
     /** Where the bug would stand on an element's top edge, or null if it can't land there. */
-    const spotOn = (n: Element, towardX: number): Spot | null => {
-      const r = n.getBoundingClientRect();
+    const fits = (e: Edge) => {
       const b = bounds();
+      return e.top >= b.t && e.top <= b.b - 10;
+    };
+
+    const spotOn = (n: Element, towardX: number): Spot | null => {
       const box = n.matches(BOX);
-      if (r.width < (box ? 140 : 60) || (box && r.height < 60)) return null;
-      if (r.top < b.t || r.top > b.b - 10) return null;
+      const r = edgeOf(n, box);
+      const b = bounds();
+      if (!r || r.right - r.left < (box ? 140 : 60) || (box && r.bottom - r.top < 60)) return null;
+      if (!fits(r)) return null;
       const lo = Math.max(r.left + 16, b.l);
       const hi = Math.min(r.right - 16, b.r);
       if (hi - lo < 24) return null;
@@ -166,17 +193,18 @@ export function Bug() {
         .filter((s) => !pointer || Math.hypot(s.x - pointer.x, s.y - pointer.y) > 140)
         .sort((a, b) => Math.hypot(a.x - pos.x, a.y - pos.y) - Math.hypot(b.x - pos.x, b.y - pos.y))[0] ?? null;
 
-    /** Curved, buzzing flight. `dest` is read every frame so moving targets are followed. */
-    const flyTo = (dest: () => { x: number; y: number }, then: () => void, speed = 520) => {
+    /** Curved, buzzing flight. `dest` is read every frame so moving targets are followed; null means the target is gone. */
+    const flyTo = (dest: () => { x: number; y: number } | null, then: () => void, speed = 520, lost?: () => void) => {
       stop();
       look("fly");
       const from = { ...pos };
       const end = () => {
         const d = dest();
+        if (!d) return null;
         const b = bounds();
         return { x: clamp(b.l, b.r, d.x), y: clamp(b.t, b.b, d.y) };
       };
-      const first = end();
+      const first = end() ?? { ...pos };
       const dist = Math.hypot(first.x - from.x, first.y - from.y) || 1;
       const bend = rand(-0.35, 0.35) * dist;
       const p = { t: 0 };
@@ -187,6 +215,7 @@ export function Bug() {
         ease: "power1.inOut",
         onUpdate: () => {
           const d = end();
+          if (!d) return lost?.();
           const t = p.t;
           const u = 1 - t;
           const cx = (from.x + d.x) / 2 - ((d.y - from.y) / dist) * bend;
@@ -210,12 +239,8 @@ export function Bug() {
       bob = gsap.to(pos, { y: "-=6", duration: 0.45, yoyo: true, repeat: -1, ease: "sine.inOut", onUpdate: place });
     };
 
-    /** Hover in place, then pick somewhere to land once the page has stopped scrolling. */
     const settleLater = (delay: number) => {
-      timer = gsap.delayedCall(delay, () => {
-        if (performance.now() - lastScroll < 250) settleLater(0.3);
-        else go();
-      });
+      timer = gsap.delayedCall(delay, () => go());
     };
 
     const go = (skip?: Element) => {
@@ -237,35 +262,39 @@ export function Bug() {
       });
     };
 
-    const takeOff = () => {
-      mode = "flying";
+    /** Leave the current spot for another one in view. */
+    const hop = () => {
+      const skip = landing?.el;
       landing = null;
-      const b = bounds();
-      const d = { x: clamp(b.l, b.r, pos.x + rand(-90, 90)), y: clamp(b.t, b.b, pos.y - rand(40, 100)) };
-      flyTo(() => d, () => {
-        mode = "hovering";
-        hover();
-        settleLater(rand(0.5, 1.2));
-      });
+      go(skip);
+    };
+
+    /** Where to stand on a perch right now, or null when it has left the screen. */
+    const standOn = (perch: Perch) => {
+      if (!perch.el.isConnected) return null;
+      const e = edgeOf(perch.el, perch.box);
+      if (!e || !fits(e) || e.right - e.left < 32) return null;
+      perch.along = clamp(16, e.right - e.left - 16, perch.along);
+      return { x: e.left + perch.along, y: e.top };
     };
 
     const land = (spot: Spot) => {
       mode = "flying";
-      const target = { el: spot.el, along: spot.along };
+      const target: Perch = { el: spot.el, box: spot.box, along: spot.along };
       landing = target;
       flyTo(
-        () => {
-          if (!target.el.isConnected) return { ...pos };
-          const r = target.el.getBoundingClientRect();
-          return { x: r.left + target.along, y: r.top };
-        },
+        () => standOn(target),
         () => {
           mode = "landed";
+          landedAt = performance.now();
           look("still");
           timer = gsap.delayedCall(rand(0.4, 1.2), walk);
           // Gets restless after a while and moves to another spot.
-          restless = gsap.delayedCall(rand(10, 18), () => go(target.el));
+          restless = gsap.delayedCall(rand(10, 18), hop);
         },
+        520,
+        // The target scrolled away mid-flight: pick another one without stopping.
+        () => go(target.el),
       );
     };
 
@@ -273,10 +302,11 @@ export function Bug() {
     const walk = () => {
       if (mode !== "landed" || !landing) return;
       const target = landing;
-      const r = target.el.getBoundingClientRect();
+      const r = edgeOf(target.el, target.box);
+      if (!r) return hop();
       const b = bounds();
       const lo = Math.max(16, b.l - r.left);
-      const hi = Math.min(r.width - 16, b.r - r.left);
+      const hi = Math.min(r.right - r.left - 16, b.r - r.left);
       const to = clamp(lo, hi, target.along + rand(-160, 160));
       const dx = to - target.along;
       if (Math.abs(dx) < 8) {
@@ -332,20 +362,20 @@ export function Bug() {
     /* Every frame: ride along with the element it stands on, and watch for the cursor. */
     const tick = () => {
       if (mode === "landed" && landing) {
-        const r = landing.el.getBoundingClientRect();
-        const b = bounds();
-        if (!landing.el.isConnected || r.top < b.t - 12 || r.top > b.b) return takeOff();
-        pos.x = r.left + landing.along;
-        pos.y = r.top;
+        const at = standOn(landing);
+        if (!at) return hop();
+        pos.x = at.x;
+        pos.y = at.y;
         place();
       }
       if ((mode === "landed" || mode === "hovering") && near(SCARE_PX)) scare();
     };
     gsap.ticker.add(tick);
 
+    // Scrolling: ride along briefly, then fly to another spot in view instead of hovering in place.
     const onScroll = () => {
-      lastScroll = performance.now();
-      if (mode === "landed") takeOff();
+      if (mode === "landed" && performance.now() - landedAt > 700) hop();
+      else if (mode === "hovering") go();
     };
     const onMove = (e: PointerEvent) => {
       if (e.pointerType === "mouse" || e.pointerType === "pen") pointer = { x: e.clientX, y: e.clientY };
