@@ -164,6 +164,34 @@ html.lenis body {
   animation: caret-blink 1s step-end infinite;
 }
 
+/* Roaming bug: legs step while it walks, wings beat while it flies */
+.bug-legs-b,
+.bug-wings {
+  opacity: 0;
+}
+.bug-wings {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+[data-look="walk"] .bug-legs-a,
+[data-look="walk"] .bug-legs-b {
+  animation: bug-step 0.26s step-end infinite;
+}
+[data-look="walk"] .bug-legs-b {
+  animation-delay: -0.13s;
+}
+[data-look="fly"] .bug-wings {
+  opacity: 0.85;
+  animation: bug-flap 0.08s linear infinite alternate;
+}
+@keyframes bug-step {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes bug-flap {
+  to { transform: scaleY(0.3); }
+}
+
 /* Gentle sway for the waving avatar */
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }

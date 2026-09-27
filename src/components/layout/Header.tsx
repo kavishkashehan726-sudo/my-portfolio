@@ -7,6 +7,7 @@ import { useLenis } from "lenis/react";
 import { navItems, profile } from "@/data/profile";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { TunnelIcon } from "@/components/ui/TunnelIcon";
 import { socials } from "./navIcons";
 
 export function Logo() {
@@ -61,14 +62,30 @@ export function Header() {
   return (
     <>
       <header
+        data-site-header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-500 ${
           scrolled ? "border-b border-line bg-bg/70 backdrop-blur-xl" : "border-b border-transparent"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:h-20 sm:px-10 lg:px-16">
+        <div className="relative mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:h-20 sm:px-10 lg:px-16">
           <Logo />
+          <TransitionLink
+            href="/bug-hunt"
+            className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-full border border-line bg-[var(--nav-bg)] py-1.5 pl-3 pr-4 font-mono text-[0.8rem] text-ink backdrop-blur transition-colors hover:border-accent hover:text-accent lg:flex"
+          >
+            <TunnelIcon className="h-auto w-7" />
+            Squash the bug
+          </TransitionLink>
           <div className="flex items-center gap-2">
             <SocialLinks className="hidden md:flex" />
+            <TransitionLink
+              href="/bug-hunt"
+              aria-label="Squash the bug"
+              title="Squash the bug"
+              className="grid h-9 w-9 place-items-center rounded-full border border-line text-ink transition-colors hover:text-accent lg:hidden"
+            >
+              <TunnelIcon className="h-auto w-5" />
+            </TransitionLink>
             <ThemeToggle className="ml-1" />
             <button
               type="button"

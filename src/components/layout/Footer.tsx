@@ -1,5 +1,6 @@
 import { navItems, profile } from "@/data/profile";
 import { TransitionLink } from "@/components/ui/TransitionLink";
+import { BugToggle } from "./BugToggle";
 import { SocialLinks } from "./Header";
 
 export function Footer() {
@@ -28,9 +29,12 @@ export function Footer() {
         </nav>
         <SocialLinks />
       </div>
-      <p className="border-t border-line px-5 py-5 text-center font-mono text-[11px] tracking-wider text-ink-2">
-        © {new Date().getFullYear()} {profile.name}. All rights reserved.
-      </p>
+      <div className="flex flex-col items-center justify-center gap-x-6 gap-y-2 border-t border-line px-5 py-5 font-mono text-[11px] tracking-wider text-ink-2 sm:flex-row">
+        <p>
+          © {new Date().getFullYear()} {profile.name}. All rights reserved.
+        </p>
+        <BugToggle />
+      </div>
     </footer>
   );
 }
