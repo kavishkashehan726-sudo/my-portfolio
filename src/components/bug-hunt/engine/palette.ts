@@ -1,0 +1,135 @@
+/* Room colours. Light theme is daytime with the lamp on; dark theme is night with the lamp off. */
+
+export type Palette = {
+  dark: boolean;
+  wallTop: string;
+  wallBot: string;
+  stripe: string;
+  wains: string;
+  line: string;
+  rail: string;
+  floorTop: string;
+  floorBot: string;
+  plank: string;
+  woodTop: string;
+  woodEdge: string;
+  woodGrain: string;
+  metal: string;
+  skyTop: string;
+  skyBot: string;
+  hills: string;
+  frame: string;
+  curtain: string;
+  curtainDark: string;
+  brick: string;
+  mortar: string;
+  shelf: string;
+  accent: string;
+  accentDark: string;
+  hoodie: string;
+  hoodieDark: string;
+  skin: string;
+  skinDark: string;
+  hair: string;
+  jeans: string;
+  jeansDark: string;
+  shoe: string;
+  chair: string;
+  chairHi: string;
+  bezel: string;
+  ball: string;
+  ballDark: string;
+  seam: string;
+  rubber: string;
+  slingWood: string;
+  slingDark: string;
+  crate: string;
+  crateDark: string;
+  shade: string;
+  /** rgb of the darkness laid over the room, and how dark it gets away from any light. */
+  darkness: string;
+  ambient: number;
+};
+
+export const LIGHT: Palette = {
+  dark: false,
+  wallTop: "#efeaf6",
+  wallBot: "#e3dcef",
+  stripe: "rgba(90,70,140,0.045)",
+  wains: "#dad1e9",
+  line: "rgba(60,40,100,0.12)",
+  rail: "#f8f6fc",
+  floorTop: "#b98a5f",
+  floorBot: "#8c6142",
+  plank: "rgba(60,30,10,0.2)",
+  woodTop: "#c99566",
+  woodEdge: "#8d5b38",
+  woodGrain: "rgba(60,30,10,0.18)",
+  metal: "#2d2739",
+  skyTop: "#86c1ff",
+  skyBot: "#dcefff",
+  hills: "#8fbf8a",
+  frame: "#fbfaff",
+  curtain: "#d9505f",
+  curtainDark: "#a8303f",
+  brick: "#b8664a",
+  mortar: "#d9cbc0",
+  shelf: "#8d5b38",
+  accent: "#e3263a",
+  accentDark: "#8f1a2a",
+  hoodie: "#3d3176",
+  hoodieDark: "#2a2158",
+  skin: "#a9734c",
+  skinDark: "#87583a",
+  hair: "#1c1420",
+  jeans: "#2f3b60",
+  jeansDark: "#222b47",
+  shoe: "#f1eef7",
+  chair: "#2a2440",
+  chairHi: "#3d3558",
+  bezel: "#17141f",
+  ball: "#dbe85c",
+  ballDark: "#9fb032",
+  seam: "#f8faea",
+  rubber: "#3a2620",
+  slingWood: "#9c6836",
+  slingDark: "#6a4220",
+  crate: "#c0925a",
+  crateDark: "#8a6236",
+  shade: "rgba(30,20,50,0.2)",
+  darkness: "26,18,44",
+  ambient: 0.34,
+};
+
+export const DARK: Palette = {
+  ...LIGHT,
+  dark: true,
+  wallTop: "#2c2650",
+  wallBot: "#241f44",
+  stripe: "rgba(255,255,255,0.025)",
+  wains: "#211c3e",
+  line: "rgba(255,255,255,0.07)",
+  rail: "#37305e",
+  floorTop: "#5a3f30",
+  floorBot: "#3a281f",
+  plank: "rgba(0,0,0,0.3)",
+  woodTop: "#8a6243",
+  woodEdge: "#5c3b25",
+  skyTop: "#070b24",
+  skyBot: "#1b2350",
+  hills: "#0e1330",
+  frame: "#3c3566",
+  curtain: "#8f2b3a",
+  curtainDark: "#5c1824",
+  brick: "#7a3f30",
+  mortar: "#5a4c48",
+  shelf: "#5c3b25",
+  accent: "#ff3b3f",
+  accentDark: "#a32630",
+  shoe: "#cfcbe0",
+  crate: "#8a6a42",
+  crateDark: "#5e4428",
+  shade: "rgba(0,0,0,0.3)",
+  darkness: "4,3,14",
+  ambient: 0.6,
+};
