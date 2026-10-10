@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { useReducedMotion } from "motion/react";
 import { useIntro } from "@/components/providers/IntroProvider";
 import { useBugHidden } from "@/lib/bugStore";
+import { BUG_BODY as BODY, BUG_LEGS_A as LEGS_A, BUG_LEGS_B as LEGS_B, BUG_WINGS as WINGS, pixelRuns } from "@/lib/bugSprite";
 
-/* ---------- Sprite: pixel bug facing right, feet on row 10, wings above row 0 ---------- */
+/* ---------- Sprite colours (the pixel rows live in lib/bugSprite) ---------- */
 
 const COLORS: Record<string, string> = {
   S: "var(--accent)",
@@ -18,38 +20,8 @@ const COLORS: Record<string, string> = {
   W: "#a9c8f5",
 };
 
-const BODY = [
-  ".............A..",
-  "....SSSS....A...",
-  "..SSSSSSSS.HH...",
-  ".SSKSSSKSSHHHH..",
-  ".SSSKSKSSSHHEH..",
-  ".SSSSKSSSSHHHHH.",
-  ".SSSKSKSSSHHHH..",
-  ".SSKSSSKSSHHH...",
-  "...SSSSSSSS.....",
-];
-const LEGS_A = ["...L..L..L......", "..L..L..L......."];
-const LEGS_B = ["....L..L..L.....", ".....L..L..L...."];
-const WINGS = [".......WW.......", "...WW.WWWW......", "..WWWWWWWW......", "...WWWWWW......."];
-
-/** Turns rows of letters into runs of same-coloured pixels. */
-function pixels(rows: string[], top: number) {
-  return rows.flatMap((row, y) => {
-    const runs: { x: number; y: number; w: number; c: string }[] = [];
-    for (let x = 0; x < row.length; x++) {
-      const c = row[x];
-      if (c === ".") continue;
-      const last = runs[runs.length - 1];
-      if (last && last.c === c && last.x + last.w === x) last.w++;
-      else runs.push({ x, y: y + top, w: 1, c });
-    }
-    return runs;
-  });
-}
-
 function Pixels({ rows, top }: { rows: string[]; top: number }) {
-  return pixels(rows, top).map((p) => <rect key={`${p.x}-${p.y}`} x={p.x} y={p.y} width={p.w} height={1} fill={COLORS[p.c]} />);
+  return pixelRuns(rows, top).map((p) => <rect key={`${p.x}-${p.y}`} x={p.x} y={p.y} width={p.w} height={1} fill={COLORS[p.c]} />);
 }
 
 /* ---------- Behaviour ---------- */
@@ -90,7 +62,9 @@ export function Bug() {
   const { done } = useIntro();
   const reduce = useReducedMotion();
   const hidden = useBugHidden();
-  const active = done && reduce === false && !hidden;
+  // The bug hunt page runs its own bugs.
+  const hunting = usePathname()?.startsWith("/bug-hunt") ?? false;
+  const active = done && reduce === false && !hidden && !hunting;
   const root = useRef<HTMLDivElement>(null);
   const flip = useRef<HTMLDivElement>(null);
   const sprite = useRef<SVGSVGElement>(null);
