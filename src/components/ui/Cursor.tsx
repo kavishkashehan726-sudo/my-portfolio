@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { HandCursor } from "./HandCursor";
 
 const INTERACTIVE = "a, button, [role='button'], input, textarea, select, label, [data-cursor]";
 
-/** Hollow ring that trails the pointer and expands over anything clickable. Desktop only. */
+/** Hollow ring that trails the pointer and expands over anything clickable. Desktop only. On the bug hunt page it is a hand instead. */
 export function Cursor() {
   const ring = useRef<HTMLDivElement>(null);
   const dot = useRef<HTMLDivElement>(null);
+  const [live, setLive] = useState(false);
+  const hunting = usePathname()?.startsWith("/bug-hunt") ?? false;
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -16,6 +20,7 @@ export function Cursor() {
 
     const root = document.documentElement;
     root.classList.add("has-cursor");
+    setLive(true);
     const r = ring.current;
     const d = dot.current;
     let x = -100, y = -100, rx = -100, ry = -100, raf = 0, scale = 1, targetScale = 1;
@@ -46,21 +51,27 @@ export function Cursor() {
     return () => {
       cancelAnimationFrame(raf);
       root.classList.remove("has-cursor");
+      setLive(false);
       window.removeEventListener("pointermove", move);
       document.removeEventListener("pointerleave", leave);
       document.removeEventListener("pointerenter", enter);
     };
   }, []);
 
+  const hide = hunting ? { display: "none" } : undefined;
+
   return (
     <>
+      {live && hunting && <HandCursor />}
       <div
         ref={ring}
+        style={hide}
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[100] hidden h-8 w-8 rounded-full border border-ink/60 transition-[background-color,border-color] duration-200 data-[active=true]:border-accent data-[active=true]:bg-accent/10 [@media(pointer:fine)]:block"
       />
       <div
         ref={dot}
+        style={hide}
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[100] hidden h-1.5 w-1.5 rounded-full bg-accent [@media(pointer:fine)]:block"
       />
