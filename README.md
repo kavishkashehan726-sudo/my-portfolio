@@ -20,12 +20,20 @@ Personal portfolio of **Shehan Kavishka**, full-stack engineer from Hikkaduwa, S
 A pixel bug roams every page of the site. The **Squash the bug** button in the header leads to its home: a
 small game set in my study room.
 
+![Aiming the slingshot at a bug walking along the desk](docs/screenshots/bug-hunt-aim.webp)
+
 - Bugs crawl out of a burrow in the wall, fly to the desk and walk toward me while I code.
 - Grab a ball from the crate, drop it in the slingshot, pull back and let go. Mid-air hits score double.
 - If a bug climbs onto my head, I get hacked: the screen glitches and I break apart into pixels.
 - The bulb hanging from the ceiling can be dragged and swung, and it lights the room and casts shadows.
   Tap it to switch the light off, which also switches the site to dark mode.
 - Pause with **P** or **Esc**, restart with **R**. Your best score is saved in the browser.
+
+| Squashed mid-walk | Lights off |
+| --- | --- |
+| ![A ball squashing the bug on the desk](docs/screenshots/bug-hunt-squash.webp) | ![The room at night with the lamp switched off](docs/screenshots/bug-hunt-night.webp) |
+| **Hacked** | **Game over** |
+| ![The bug on my head while I glitch and the screen reads HACKED](docs/screenshots/bug-hunt-hacked.webp) | ![Me breaking apart into pixels that rain onto the desk](docs/screenshots/bug-hunt-pixels.webp) |
 
 Everything is drawn on a canvas, with no game engine or image files. The balls bounce and roll, the
 slingshot band is a spring, and the lamp cord is a swinging chain, all on a small physics loop. The code
