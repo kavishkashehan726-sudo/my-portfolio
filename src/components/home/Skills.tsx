@@ -1,20 +1,8 @@
-import type { IconType } from "react-icons";
-import {
-  SiDocker, SiElectron, SiGit, SiGooglegemini, SiLetsencrypt, SiLinux, SiMysql, SiNestjs, SiNextdotjs, SiNginx,
-  SiNodedotjs, SiPhp, SiPm2, SiPostgresql, SiPrisma, SiReact, SiTailwindcss, SiThreedotjs, SiTypescript, SiVuedotjs,
-} from "react-icons/si";
-import { LuMic, LuSparkles } from "react-icons/lu";
 import { skillGroups } from "@/data/skills";
 import { Reveal } from "@/components/ui/Reveal";
+import { techIcons as icons } from "@/components/ui/techIcons";
 import { ProfileCards } from "./ProfileCards";
 import { SkillsBackdrop } from "./SkillsBackdrop";
-
-const icons: Record<string, IconType> = {
-  "Next.js": SiNextdotjs, React: SiReact, "Vue.js": SiVuedotjs, TypeScript: SiTypescript, "Tailwind CSS": SiTailwindcss,
-  "Three.js": SiThreedotjs, NestJS: SiNestjs, "Node.js": SiNodedotjs, PHP: SiPhp, PostgreSQL: SiPostgresql, MySQL: SiMysql,
-  Prisma: SiPrisma, Docker: SiDocker, Nginx: SiNginx, PM2: SiPm2, Linux: SiLinux, SSL: SiLetsencrypt, Git: SiGit,
-  Electron: SiElectron, Gemini: SiGooglegemini, "Voice UX": LuMic, "Prompt engineering": LuSparkles,
-};
 
 // The real order a release goes through, so numbering carries meaning here.
 const pipeline = ["git push", "build & test", "Docker / PM2", "Nginx + SSL", "live & monitored"];

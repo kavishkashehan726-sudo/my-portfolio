@@ -3,11 +3,13 @@ import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { TransitionLink } from "@/components/ui/TransitionLink";
+import { TechMarquee } from "./TechMarquee";
 
 export function SelectedWork() {
   const featured = projects.filter((p) => p.featured).slice(0, 3);
   return (
-    <section className="relative mx-auto max-w-[1400px] px-5 py-24 sm:px-10 sm:py-32 lg:pl-16 lg:pr-28">
+    <section className="relative isolate mx-auto max-w-[1400px] px-5 py-24 sm:px-10 sm:py-32 lg:pl-16 lg:pr-28">
+      <TechMarquee />
       <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow">Selected work</p>

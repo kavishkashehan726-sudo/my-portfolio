@@ -390,6 +390,17 @@ html.lenis body {
   transform: translateX(120%);
 }
 
+/* Tech strip behind the project cards: two copies of the row, so sliding by half loops seamlessly */
+.tech-marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.tech-marquee-track {
+  animation: marquee-left 70s linear infinite;
+}
+@keyframes marquee-left {
+  to { transform: translateX(-50%); }
+}
+
 /* Gentle sway for the waving avatar */
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }
