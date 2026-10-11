@@ -123,17 +123,11 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.7, ease }}
           >
             <TransitionLink
-              href="/projects"
+              href="/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-white shadow-[0_10px_30px_-10px_var(--glow)] transition-transform hover:scale-[1.03]"
             >
-              View my work
-              <LuArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden />
-            </TransitionLink>
-            <TransitionLink
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 font-medium text-ink transition-colors hover:border-accent hover:text-accent"
-            >
               Get in touch
+              <LuArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden />
             </TransitionLink>
             <motion.div
               className="ml-1 sm:ml-3"
