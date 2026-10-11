@@ -4,7 +4,7 @@ Personal portfolio of **Shehan Kavishka**, full-stack engineer from Hikkaduwa, S
 
 **Live site:** https://kavishkashehan726-sudo.github.io/my-portfolio/
 
-**LinkedIn:** https://www.linkedin.com/in/shehan-kavishka
+**LinkedIn:** https://www.linkedin.com/in/shehankavishka/
 
 ## Stack
 
