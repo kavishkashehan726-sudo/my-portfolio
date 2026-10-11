@@ -3,13 +3,13 @@ import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { TransitionLink } from "@/components/ui/TransitionLink";
+import { ClientLogos } from "./ClientLogos";
 import { TechMarquee } from "./TechMarquee";
 
 export function SelectedWork() {
   const featured = projects.filter((p) => p.featured).slice(0, 3);
   return (
     <section className="relative isolate mx-auto max-w-[1400px] px-5 py-24 sm:px-10 sm:py-32 lg:pl-16 lg:pr-28">
-      <TechMarquee />
       <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow">Selected work</p>
@@ -22,11 +22,13 @@ export function SelectedWork() {
           <LuArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden />
         </TransitionLink>
       </Reveal>
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="relative mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <TechMarquee />
         {featured.map((p, i) => (
           <ProjectCard key={p.slug} project={p} index={i} />
         ))}
       </div>
+      <ClientLogos />
     </section>
   );
 }

@@ -43,7 +43,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
       exit={{ opacity: 0, scale: 0.96 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
       transition={{ duration: 0.6, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-bg-2/70 backdrop-blur transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-accent/50"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-bg-2/90 backdrop-blur transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-accent/50"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         {project.image ? (

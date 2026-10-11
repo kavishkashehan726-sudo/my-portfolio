@@ -401,6 +401,21 @@ html.lenis body {
   to { transform: translateX(-50%); }
 }
 
+/* Logo bar under the selected work: drifts left to right, pauses on hover */
+.client-marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.client-marquee-track {
+  animation: marquee-right 45s linear infinite;
+}
+.client-marquee:hover .client-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
 /* Gentle sway for the waving avatar */
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }

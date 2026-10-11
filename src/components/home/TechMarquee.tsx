@@ -4,7 +4,7 @@ import { techIcons } from "@/components/ui/techIcons";
 const items = skillGroups.flatMap((g) => g.items).filter((name) => techIcons[name]);
 
 /**
- * A faint, full-width strip of the stack drifting right to left behind the project cards.
+ * A faint, full-width strip of the stack drifting right to left, centred behind the project cards.
  * Kept at very low contrast so it reads as texture, never competing with the cards.
  */
 export function TechMarquee() {
