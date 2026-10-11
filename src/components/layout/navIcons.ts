@@ -1,5 +1,6 @@
 import type { IconType } from "react-icons";
 import { LuFolderKanban, LuGlobe, LuHouse, LuLayoutGrid, LuMail, LuMessageCircleQuestion, LuUser } from "react-icons/lu";
+import { FaLinkedinIn } from "react-icons/fa6";
 import { SiGithub, SiWhatsapp } from "react-icons/si";
 import type { NavItem } from "@/data/profile";
 import { profile } from "@/data/profile";
@@ -17,5 +18,6 @@ export const socials: { label: string; href: string; icon: IconType; primary?: b
   { label: "WhatsApp", href: profile.whatsapp, icon: SiWhatsapp },
   { label: "Email", href: `mailto:${profile.email}`, icon: LuMail },
   { label: "Thambapanni IT Solutions", href: profile.company.url, icon: LuGlobe },
+  { label: "LinkedIn", href: profile.linkedin, icon: FaLinkedinIn },
   { label: "GitHub", href: profile.github, icon: SiGithub, primary: true },
 ];

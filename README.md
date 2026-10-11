@@ -4,6 +4,8 @@ Personal portfolio of **Shehan Kavishka**, full-stack engineer from Hikkaduwa, S
 
 **Live site:** https://kavishkashehan726-sudo.github.io/my-portfolio/
 
+**LinkedIn:** https://www.linkedin.com/in/shehan-kavishka
+
 ## Stack
 
 - [Next.js](https://nextjs.org) (App Router, static export) and TypeScript

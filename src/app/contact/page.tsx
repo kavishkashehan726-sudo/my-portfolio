@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LuClock, LuMail, LuMapPin } from "react-icons/lu";
+import { FaLinkedinIn } from "react-icons/fa6";
 import { SiWhatsapp } from "react-icons/si";
 import { profile } from "@/data/profile";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 const channels = [
   { icon: LuMail, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
   { icon: SiWhatsapp, label: "WhatsApp", value: "Chat on WhatsApp", href: profile.whatsapp },
+  { icon: FaLinkedinIn, label: "LinkedIn", value: "Connect on LinkedIn", href: profile.linkedin },
   { icon: LuMapPin, label: "Location", value: `${profile.location} · working remotely` },
   { icon: LuClock, label: "Reply time", value: "Usually within a day" },
 ];
