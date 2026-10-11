@@ -14,8 +14,9 @@ export function ClientLogos() {
       <li key={`${dup}-${i}`} className="shrink-0 px-3" aria-hidden={dup || i >= clients.length || undefined}>
         <div
           className={`flex h-20 items-center justify-center rounded-2xl px-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)] ring-1 transition-transform duration-300 hover:-translate-y-1 ${
-            c.tile === "dark" ? "bg-black ring-white/10" : "bg-white ring-black/5"
+            c.tile === "light" ? "bg-white ring-black/5" : "bg-black ring-white/10"
           }`}
+          style={c.tile.startsWith("#") ? { backgroundColor: c.tile } : undefined}
         >
           <img src={asset(c.logo)} alt={dup || i >= clients.length ? "" : c.name} title={c.name} loading="lazy" className="h-14 w-auto max-w-[11rem] object-contain" />
         </div>
