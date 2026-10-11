@@ -431,16 +431,33 @@ html.lenis body {
 }
 
 /* Gentle sway for the waving avatar */
-/* Hero greeting: the hand waves a few times, then rests */
+/* Hero greeting: the hand waves, rests a while, waves again; motion lines flash with each wave */
 .hand-wave {
-  transform-origin: 70% 80%;
-  animation: hand-wave 2.2s ease-in-out 1.2s 2;
+  transform-origin: 50% 90%;
+  animation: hand-wave 4.5s ease-in-out 1.2s infinite;
 }
 @keyframes hand-wave {
-  0%, 60%, 100% { transform: rotate(0deg); }
-  10%, 30% { transform: rotate(16deg); }
-  20%, 40% { transform: rotate(-8deg); }
-  50% { transform: rotate(10deg); }
+  0%, 40%, 100% { transform: rotate(0deg); }
+  6%, 18% { transform: rotate(18deg); }
+  12%, 24% { transform: rotate(-10deg); }
+  30% { transform: rotate(8deg); }
+}
+.hand-lines {
+  opacity: 0;
+  animation: hand-lines 4.5s ease-in-out 1.2s infinite;
+}
+@keyframes hand-lines {
+  0%, 40%, 100% { opacity: 0; transform: translate(-2px, 2px); }
+  8%, 28% { opacity: 1; transform: translate(0, 0); }
+}
+
+/* Terminal caret */
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret-blink {
+  animation: caret-blink 1s step-end infinite;
 }
 
 @keyframes wave {

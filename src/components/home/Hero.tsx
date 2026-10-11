@@ -6,8 +6,10 @@ import { profile } from "@/data/profile";
 import { asset } from "@/lib/asset";
 import { useIntro } from "@/components/providers/IntroProvider";
 import { Constellation } from "./Constellation";
-import { LuArrowRight } from "react-icons/lu";
+import { LuArrowRight, LuHand } from "react-icons/lu";
 import { TransitionLink } from "@/components/ui/TransitionLink";
+import { ProjectsBadge } from "./ProjectsBadge";
+import { TypingLine } from "./TypingLine";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -22,6 +24,19 @@ function Line({ children, i, show }: { children: React.ReactNode; i: number; sho
       >
         {children}
       </motion.span>
+    </span>
+  );
+}
+
+/** A line-drawn hand in a soft red ring that waves now and then, with motion lines beside it. */
+function WavingHand() {
+  return (
+    <span aria-hidden className="relative inline-grid h-10 w-10 place-items-center rounded-full border border-accent/30 bg-accent/10 text-accent">
+      <LuHand size={19} strokeWidth={2.1} className="hand-wave" />
+      <svg viewBox="0 0 16 16" className="hand-lines absolute -right-2 -top-2 h-4 w-4 text-accent" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+        <path d="M8.5 4 A6 6 0 0 1 12 8" />
+        <path d="M9.5 1 A9.5 9.5 0 0 1 15 7" />
+      </svg>
     </span>
   );
 }
@@ -64,9 +79,7 @@ export function Hero() {
             animate={done ? { opacity: 1, x: 0 } : undefined}
             transition={{ duration: 0.8, ease }}
           >
-            <span aria-hidden className="hand-wave inline-block text-xl sm:text-2xl">
-              👋
-            </span>
+            <WavingHand />
             Hi, I&rsquo;m
           </motion.p>
           <h1 className="mt-3 font-display text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[3.6rem] lg:text-[3.3rem] xl:text-[4.1rem] 2xl:text-[4.6rem]">
@@ -75,16 +88,14 @@ export function Hero() {
               <span className="text-accent">.</span>
             </Line>
           </h1>
-          <motion.p
-            className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.2em] text-ink-2 sm:text-[0.8rem]"
-            initial={{ opacity: 0, y: 12 }}
-            animate={done ? { opacity: 1, y: 0 } : undefined}
+          <motion.div
+            className="mt-4"
+            initial={{ opacity: 0, x: -12 }}
+            animate={done ? { opacity: 1, x: 0 } : undefined}
             transition={{ duration: 0.8, delay: 0.35, ease }}
           >
-            {profile.role}
-            <span aria-hidden className="h-1 w-1 rounded-full bg-accent" />
-            {profile.location}
-          </motion.p>
+            <TypingLine lines={profile.taglines} start={done} />
+          </motion.div>
           <motion.div
             className="mt-7 max-w-[36rem] space-y-4 text-base leading-relaxed text-ink-2 sm:text-[1.05rem]"
             initial={{ opacity: 0, y: 16 }}
@@ -106,7 +117,7 @@ export function Hero() {
             </p>
           </motion.div>
           <motion.div
-            className="mt-9 flex flex-wrap items-center gap-3"
+            className="mt-9 flex flex-wrap items-center gap-3 sm:gap-4"
             initial={{ opacity: 0, y: 16 }}
             animate={done ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.9, delay: 0.7, ease }}
@@ -124,6 +135,14 @@ export function Hero() {
             >
               Get in touch
             </TransitionLink>
+            <motion.div
+              className="ml-1 sm:ml-3"
+              initial={{ opacity: 0, scale: 0.8, rotate: -30 }}
+              animate={done ? { opacity: 1, scale: 1, rotate: 0 } : undefined}
+              transition={{ duration: 1, delay: 0.85, ease }}
+            >
+              <ProjectsBadge className="h-24 w-24 sm:h-32 sm:w-32" />
+            </motion.div>
           </motion.div>
         </motion.div>
 
