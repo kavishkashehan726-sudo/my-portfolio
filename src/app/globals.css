@@ -284,6 +284,62 @@ html.lenis body {
   50% { transform: translateY(-7px); }
 }
 
+/* FAQ illustration: letter colours per theme, floating marks, a blink and a peeking bug */
+.faq-art {
+  --faq-face: #f1eef8;
+  --faq-side: #bab1d4;
+  --faq-edge: rgb(23 19 46 / 0.1);
+}
+[data-theme="dark"] .faq-art {
+  --faq-face: #322b60;
+  --faq-side: #1b1739;
+  --faq-edge: rgb(255 255 255 / 0.08);
+}
+.faq-art .faq-float,
+.faq-art .faq-twinkle,
+.faq-art .faq-blink,
+.faq-art .faq-peek,
+.faq-art .faq-think {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.faq-float {
+  animation: faq-float 5s ease-in-out infinite;
+}
+.faq-twinkle {
+  animation: faq-twinkle 3s ease-in-out infinite;
+}
+.faq-blink {
+  animation: faq-blink 4.5s infinite;
+}
+.faq-think {
+  transform-origin: 50% 100% !important;
+  animation: faq-think 6s ease-in-out infinite;
+}
+.faq-peek {
+  animation: faq-peek 7s ease-in-out infinite;
+}
+@keyframes faq-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes faq-twinkle {
+  0%, 100% { transform: scale(0.6); opacity: 0.4; }
+  50% { transform: scale(1); opacity: 1; }
+}
+@keyframes faq-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.1); }
+}
+@keyframes faq-think {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-3deg); }
+}
+@keyframes faq-peek {
+  0%, 30%, 100% { transform: translateY(12px); }
+  40%, 85% { transform: translateY(0); }
+}
+
 /* Gentle sway for the waving avatar */
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }

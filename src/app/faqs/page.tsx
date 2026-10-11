@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TransitionLink } from "@/components/ui/TransitionLink";
-import { FaqList } from "./FaqList";
+import { FaqSection } from "./FaqSection";
 
 export const metadata: Metadata = {
   title: "FAQs",
@@ -19,7 +19,7 @@ export default function FaqsPage() {
         .
       </PageHeader>
       <section className="mx-auto max-w-[1400px] px-5 pb-28 sm:px-10 lg:pl-16 lg:pr-28">
-        <FaqList />
+        <FaqSection />
       </section>
     </>
   );

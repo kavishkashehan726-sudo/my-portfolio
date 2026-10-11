@@ -1,13 +1,12 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { LuPlus } from "react-icons/lu";
 import { faqs } from "@/data/faqs";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function FaqList() {
-  const [open, setOpen] = useState<number | null>(0);
+export function FaqList({ open, setOpen }: { open: number | null; setOpen: (i: number | null) => void }) {
   const id = useId();
 
   return (
