@@ -71,6 +71,7 @@ export function Header() {
           <Logo />
           <TransitionLink
             href="/bug-hunt"
+            data-bug-hunt-link
             className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-full border border-line bg-[var(--nav-bg)] py-1.5 pl-3 pr-4 font-mono text-[0.8rem] text-ink backdrop-blur transition-colors hover:border-accent hover:text-accent lg:flex"
           >
             <TunnelIcon className="h-auto w-7" />
@@ -80,6 +81,7 @@ export function Header() {
             <SocialLinks className="hidden md:flex" />
             <TransitionLink
               href="/bug-hunt"
+              data-bug-hunt-link
               aria-label="Squash the bug"
               title="Squash the bug"
               className="grid h-9 w-9 place-items-center rounded-full border border-line text-ink transition-colors hover:text-accent lg:hidden"

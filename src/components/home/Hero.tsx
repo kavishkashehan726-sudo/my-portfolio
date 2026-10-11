@@ -6,8 +6,8 @@ import { profile } from "@/data/profile";
 import { asset } from "@/lib/asset";
 import { useIntro } from "@/components/providers/IntroProvider";
 import { Constellation } from "./Constellation";
-import { ProjectsBadge } from "./ProjectsBadge";
-import { TypingLine } from "./TypingLine";
+import { LuArrowRight } from "react-icons/lu";
+import { TransitionLink } from "@/components/ui/TransitionLink";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -58,35 +58,72 @@ export function Hero() {
       <div className="mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 px-5 pt-24 sm:px-10 lg:grid-cols-[1.05fr_1fr] lg:px-16 lg:pt-0">
         {/* Copy */}
         <motion.div style={{ y: textY }} className="relative z-10 flex flex-col justify-center lg:py-32">
-          <motion.div
-            className="mb-6"
+          <motion.p
+            className="flex items-center gap-2.5 font-mono text-sm text-ink-2 sm:text-base"
             initial={{ opacity: 0, x: -12 }}
             animate={done ? { opacity: 1, x: 0 } : undefined}
             transition={{ duration: 0.8, ease }}
           >
-            <TypingLine lines={profile.taglines} start={done} />
-          </motion.div>
-          <h1 className="font-display text-[2.3rem] font-semibold leading-[1.1] tracking-tight text-ink sm:text-[3.2rem] lg:text-[2.75rem] xl:text-[3.5rem] 2xl:text-[4rem]">
-            <Line i={0} show={done}>Building the Systems</Line>
-            <Line i={1} show={done}>
-              Businesses <span className="whitespace-nowrap text-accent">Run On</span>
+            <span aria-hidden className="hand-wave inline-block text-xl sm:text-2xl">
+              👋
+            </span>
+            Hi, I&rsquo;m
+          </motion.p>
+          <h1 className="mt-3 font-display text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[3.6rem] lg:text-[3.3rem] xl:text-[4.1rem] 2xl:text-[4.6rem]">
+            <Line i={0} show={done}>
+              {profile.name}
+              <span className="text-accent">.</span>
             </Line>
           </h1>
           <motion.p
-            className="mt-7 max-w-[34rem] text-base leading-relaxed text-ink-2 sm:text-[1.05rem]"
-            initial={{ opacity: 0, y: 16 }}
+            className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.2em] text-ink-2 sm:text-[0.8rem]"
+            initial={{ opacity: 0, y: 12 }}
             animate={done ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.9, delay: 0.55, ease }}
+            transition={{ duration: 0.8, delay: 0.35, ease }}
           >
-            {profile.intro}
+            {profile.role}
+            <span aria-hidden className="h-1 w-1 rounded-full bg-accent" />
+            {profile.location}
           </motion.p>
           <motion.div
-            className="mt-8 sm:mt-10 lg:mt-16"
-            initial={{ opacity: 0, scale: 0.8, rotate: -30 }}
-            animate={done ? { opacity: 1, scale: 1, rotate: 0 } : undefined}
-            transition={{ duration: 1, delay: 0.75, ease }}
+            className="mt-7 max-w-[36rem] space-y-4 text-base leading-relaxed text-ink-2 sm:text-[1.05rem]"
+            initial={{ opacity: 0, y: 16 }}
+            animate={done ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.9, delay: 0.5, ease }}
           >
-            <ProjectsBadge />
+            <p>
+              I&rsquo;m a software engineer at {profile.company.name} and a BSE (Hons) undergraduate at The Open University of Sri
+              Lanka. I like owning a product end to end: designing the screens, writing the backend, and setting up the server it
+              runs on.
+            </p>
+            <p>
+              For the past year and a half I&rsquo;ve been building{" "}
+              <span className="font-medium text-ink">
+                the systems businesses <span className="whitespace-nowrap text-accent">run on</span>
+              </span>{" "}
+              (POS and ERP tills, distribution and credit control, learning platforms and multi-tenant SaaS), and more than 15 of
+              them are live today.
+            </p>
+          </motion.div>
+          <motion.div
+            className="mt-9 flex flex-wrap items-center gap-3"
+            initial={{ opacity: 0, y: 16 }}
+            animate={done ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.9, delay: 0.7, ease }}
+          >
+            <TransitionLink
+              href="/projects"
+              className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-white shadow-[0_10px_30px_-10px_var(--glow)] transition-transform hover:scale-[1.03]"
+            >
+              View my work
+              <LuArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden />
+            </TransitionLink>
+            <TransitionLink
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+            >
+              Get in touch
+            </TransitionLink>
           </motion.div>
         </motion.div>
 

@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { SideNav } from "@/components/layout/SideNav";
 import { Footer } from "@/components/layout/Footer";
 import { Bug } from "@/components/layout/Bug";
+import { BugHuntNudge } from "@/components/layout/BugHuntNudge";
 import { Cursor } from "@/components/ui/Cursor";
 import { profile } from "@/data/profile";
 
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Cursor />
           <Bug />
           <Header />
+          <BugHuntNudge />
           <SideNav />
           <main id="main">{children}</main>
           <Footer />

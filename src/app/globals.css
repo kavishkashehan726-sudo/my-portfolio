@@ -155,15 +155,6 @@ html.lenis body {
   animation: spin-slow 40s linear infinite reverse;
 }
 
-/* Terminal caret */
-@keyframes caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-.caret-blink {
-  animation: caret-blink 1s step-end infinite;
-}
-
 /* Roaming bug: legs step while it walks, wings beat while it flies */
 .bug-legs-b,
 .bug-wings {
@@ -416,7 +407,42 @@ html.lenis body {
   to { transform: translateX(0); }
 }
 
+/* "Help me kill the bugs!" bubble: floats, the bug inside bobs, the button it points at pulses */
+.nudge-float {
+  animation: nudge-float 3.2s ease-in-out infinite;
+}
+@keyframes nudge-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.nudge-bug {
+  animation: nudge-bug 0.9s ease-in-out infinite;
+}
+@keyframes nudge-bug {
+  0%, 100% { transform: translateX(-2px) rotate(-3deg); }
+  50% { transform: translateX(2px) rotate(3deg); }
+}
+.nudge-ring {
+  animation: nudge-ring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes nudge-ring {
+  0% { box-shadow: 0 0 0 0 rgb(227 38 58 / 0.55); }
+  70%, 100% { box-shadow: 0 0 0 12px rgb(227 38 58 / 0); }
+}
+
 /* Gentle sway for the waving avatar */
+/* Hero greeting: the hand waves a few times, then rests */
+.hand-wave {
+  transform-origin: 70% 80%;
+  animation: hand-wave 2.2s ease-in-out 1.2s 2;
+}
+@keyframes hand-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(16deg); }
+  20%, 40% { transform: rotate(-8deg); }
+  50% { transform: rotate(10deg); }
+}
+
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }
   15%, 45% { transform: rotate(4deg); }
